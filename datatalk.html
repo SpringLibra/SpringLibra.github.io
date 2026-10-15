@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataTalk · 案例 02</title>
+<style>
+  :root{
+    --paper:#F5F3EC; --paper-2:#ECE8DC; --ink:#1B1A16; --muted:#6A6659; --faint:#948F80;
+    --rule:#D8D2C2; --rule-2:#BFB8A3; --brass:#8A6C1C; --signal:#A63A2E;
+    --maxw:840px;
+    --serif:"Noto Serif CJK SC","Source Han Serif SC","Songti SC","SimSun",Georgia,serif;
+    --sans:"Noto Sans CJK SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:"DejaVu Sans Mono","JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .doc{max-width:var(--maxw);margin:0 auto;padding:0 30px;}
+  .mono{font-family:var(--mono);}
+  a{color:inherit;}
+
+  .mast{padding:40px 0 0;display:flex;align-items:baseline;justify-content:space-between;gap:20px;}
+  .mast .name{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.04em;}
+  .mast .links{font-size:13px;color:var(--muted);}
+  .mast .links a{color:var(--muted);text-decoration:none;} .mast .links a:hover{color:var(--brass);}
+  .rule{height:0;border:0;border-top:1px solid var(--rule);margin:14px 0 0;}
+  .rule.dbl{border-top:2px solid var(--ink);margin-top:16px;}
+
+  .titleblock{padding:40px 0 30px;}
+  .kicker{font-size:13px;color:var(--brass);font-family:var(--mono);margin:0 0 12px;}
+  h1{font-family:var(--serif);font-weight:600;font-size:46px;line-height:1.1;letter-spacing:-.005em;margin:0 0 22px;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 34px;margin:0;}
+  .meta .m{font-size:14px;} .meta .mk{font-family:var(--mono);font-size:12px;color:var(--faint);margin-right:9px;} .meta .mv{color:var(--ink);}
+  .lede{font-size:19px;color:var(--muted);line-height:1.55;margin:22px 0 0;max-width:32em;}
+
+  .sec{display:grid;grid-template-columns:120px 1fr;gap:32px;padding:32px 0;border-top:1px solid var(--rule);}
+  .rail .rnum{display:block;font-family:var(--mono);font-size:12px;color:var(--brass);margin-bottom:6px;}
+  .rail .rlab{font-weight:600;font-size:15px;letter-spacing:.02em;}
+  .body p{margin:0 0 14px;} .body p:last-child{margin-bottom:0;}
+  strong{font-weight:600;}
+  em.a{font-style:normal;box-shadow:inset 0 -0.55em 0 rgba(138,108,28,.18);}
+
+  ul.clean{list-style:none;padding:0;margin:0;}
+  ul.clean li{position:relative;padding:0 0 13px 20px;font-size:16px;} ul.clean li:last-child{padding-bottom:0;}
+  ul.clean li::before{content:"";position:absolute;left:1px;top:.7em;width:6px;height:1.5px;background:var(--brass);}
+
+  .specrows{margin-top:20px;border-top:1px solid var(--rule);}
+  .srow{display:grid;grid-template-columns:96px 1fr;gap:20px;padding:14px 0;border-bottom:1px solid var(--rule);}
+  .srow .sk{font-family:var(--mono);font-size:12.5px;color:var(--brass);padding-top:3px;}
+  .srow .sv{font-size:14.5px;color:var(--muted);line-height:1.62;} .srow .sv strong{color:var(--ink);}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px;}
+  .tags span{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--rule-2);border-radius:2px;padding:3px 9px;}
+
+  .figures{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);margin:8px 0 22px;}
+  .fig{padding:18px 18px 16px;border-left:1px solid var(--rule);} .fig:first-child{border-left:0;padding-left:0;}
+  .fig .fn{font-family:var(--mono);font-size:32px;font-weight:600;letter-spacing:-.02em;line-height:1;} .fig .fn .u{font-size:16px;color:var(--muted);}
+  .fig .fl{display:block;font-size:12.5px;color:var(--faint);margin-top:9px;line-height:1.45;}
+
+  .breakdown{border:1px solid var(--rule-2);padding:20px 22px;margin:10px 0 22px;}
+  .breakdown .bt{font-size:15px;font-weight:600;} .breakdown .bs{font-size:12.5px;color:var(--faint);margin:4px 0 18px;}
+  .bd-row{display:grid;grid-template-columns:96px 1fr 56px;align-items:center;gap:14px;margin-bottom:12px;}
+  .bd-row:last-child{margin-bottom:0;}
+  .bd-row .bl{font-size:12.5px;color:var(--muted);text-align:right;}
+  .bd-track{height:10px;background:var(--paper-2);border:1px solid var(--rule);}
+  .bd-fill{height:100%;background:var(--brass);} .bd-fill.low{background:var(--signal);}
+  .bd-row .bv{font-family:var(--mono);font-size:13px;font-weight:600;text-align:right;}
+  .note{font-size:12.5px;color:var(--faint);}
+
+  .next{display:flex;align-items:baseline;justify-content:space-between;text-decoration:none;color:inherit;
+    border-top:1px solid var(--rule);margin-top:36px;padding:20px 0 60px;}
+  .next .nlab{font-family:var(--mono);font-size:12px;color:var(--faint);}
+  .next .nt{font-family:var(--serif);font-size:19px;font-weight:600;} .next .arw{color:var(--brass);}
+
+  @media (max-width:640px){
+    h1{font-size:32px;}
+    .sec{grid-template-columns:1fr;gap:12px;} .rail{display:flex;gap:10px;align-items:baseline;} .rail .rnum{margin:0;}
+    .figures{grid-template-columns:1fr;} .fig{border-left:0;border-top:1px solid var(--rule);padding-left:0;} .fig:first-child{border-top:0;}
+    .srow{grid-template-columns:1fr;gap:4px;}
+  }
+  @media print{
+    :root{--paper:#fff;--paper-2:#fff;}
+    body{font-size:12pt;}
+    .mast{padding-top:0;}
+    h1{font-size:34px;}
+    .titleblock{padding:22px 0 20px;}
+    .sec{padding:20px 0;}
+    .figures,.specrows,.breakdown,.srow,.tags{break-inside:avoid;}
+    .rail{break-inside:avoid;break-after:avoid;}
+    .titleblock{break-inside:avoid;}
+    ul.clean li{break-inside:avoid;}
+    p{orphans:2;widows:2;}
+    .next{padding-bottom:0;}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="mast">
+    <span class="name">吕民春</span>
+    <span class="links"><a href="index.html">← 返回作品集</a></span>
+  </div>
+  <hr class="rule dbl">
+
+  <section class="titleblock">
+    <p class="kicker">案例 02</p>
+    <h1>DataTalk</h1>
+    <div class="meta">
+      <span class="m"><span class="mk">角色</span><span class="mv">个人 0-1 项目</span></span>
+      <span class="m"><span class="mk">时间</span><span class="mv">2026.06 – 2026.08</span></span>
+      <span class="m"><span class="mk">领域</span><span class="mv">AI + 商业智能（Chat BI）</span></span>
+    </div>
+    <p class="lede">让不会写 SQL 的运营，用一句话拿到数。难的不是"能不能问"，是"问出来的数，能不能信"。</p>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rnum">01</span><span class="rlab">问题</span></div>
+    <div class="body">
+      <p>增长、渠道、内容运营人员不会写 SQL——取数要么等一张固定报表，要么排队等技术团队写查询，门槛高、链路长。</p>
+      <p>但这个产品真正要解决的不是"能不能问数"，而是<strong>问出来的数准不准</strong>。一个查得很快、但结果错的问数产品，比没有更危险。</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rnum">02</span><span class="rlab">关键判断</span></div>
+    <div class="body">
+      <ul class="clean">
+        <li><strong>先解决"模型看到什么"：</strong>不把几百个字段一次性塞给模型，而是用字段级检索 + Schema 关系图，只给它当下需要的那张子图。</li>
+        <li><strong>权限做在检索层：</strong>按角色加载可用数据表，权限贯穿检索、建图、SQL、工具四个环节——不是只在下游拦一道。</li>
+        <li><strong>承认歧义：</strong>业务口径有歧义时，宁可让产品发起澄清，也不让模型猜一个看起来合理的答案。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rnum">03</span><span class="rlab">系统架构</span></div>
+    <div class="body">
+      <p>我把这条问数链路，用 LangGraph 编成了一张<strong>可分支、可中断、可恢复</strong>的图——而不是一问一答的直线。</p>
+      <ul class="clean">
+        <li><strong>工作流：</strong>请求先进预处理判定意图，再分三条路——闲聊直接答、基于已有结果做分析、或去查数据库。查库这条会经过"检索 Schema →（必要时）向人澄清 → 生成并执行 SQL"。用图来编排的关键收益是：<strong>澄清能中断流程、等用户回答后再恢复</strong>，这条能力直线链条给不了。</li>
+        <li><strong>给模型看什么：</strong>不把几百个字段全塞进去，而是字段级检索 + Schema 关系图，只喂它当下需要的子图——这是挡幻觉的第一道闸。</li>
+        <li><strong>权限：</strong>每个请求带一个访问范围，<strong>工具按角色注册</strong>——没权限的用户根本看不到对应的数据库工具；SQL 执行时再二次校验（只读、单语句、禁 SELECT *）。</li>
+        <li><strong>把规则沉淀成 Skill：</strong>"怎么写对一条 SQL"（粒度、口径、时间规则、返回列顺序）写成一份 SKILL.md，而不是塞进系统提示词——规则可版本化、可独立迭代。</li>
+        <li><strong>查询契约：</strong>模型执行前必须先声明一份 query_contract（粒度 / 来源表 / 条件 / 指标 / 返回列），让"它到底想查什么"变得可核对。</li>
+      </ul>
+      <div class="specrows">
+        <div class="srow"><span class="sk">MCP 工具</span><span class="sv"><strong>每个数据库一个只读查询工具</strong>（query_数据库名），外加<strong>当前时间、解析相对日期、生成柱状图、生成饼图</strong>四个辅助工具。关键在注册方式：工具<strong>按角色注册</strong>——没权限的库，模型连工具都看不到，而不是"看到了再被拒绝"。</span></div>
+        <div class="srow"><span class="sk">Skill ×2</span><span class="sv"><strong>database_query</strong>（怎么把一句话写成一条对的只读 SQL）与 <strong>data_qa</strong>（基于已有结果做分析、出报告）。规则写进 SKILL.md——可版本化、可独立迭代，不污染主提示词。</span></div>
+      </div>
+      <div class="tags">
+        <span>Python</span><span>FastAPI</span><span>LangGraph（可中断 / 可恢复）</span><span>DuckDB</span><span>MCP</span><span>Vue</span><span>字段级 RAG + Schema 图</span><span>角色权限 ACL</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rnum">04</span><span class="rlab">取舍</span></div>
+    <div class="body">
+      <p>我的评测做了两个明确的取舍，而且我把它们写在了明面上：</p>
+      <ul class="clean">
+        <li><strong>评的是"检索对了之后"：</strong>评测给定标准的检索词，所以我测的是"检索正确后，模型能不能把 SQL 写对"，<em class="a">不是端到端</em>。先把能控的部分测准，端到端留到下一版。</li>
+        <li><strong>澄清没能纳入评测：</strong>澄清机制我设计了，但 430 条用例基本都给了明确查询，澄清<strong>实际 0 次触发</strong>。这是我这套评测的一个盲区，我没有藏它。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rnum">05</span><span class="rlab">验证</span></div>
+    <div class="body">
+      <p>我建了一套 430 条用例的评测集，覆盖增长、渠道、内容三类运营场景，从"字段召回 → SQL 执行 → 结果正确"一路量化到底。</p>
+
+      <div class="figures">
+        <div class="fig"><span class="fn">95.26<span class="u">%</span></span><span class="fl">字段级 Schema 召回率</span></div>
+        <div class="fig"><span class="fn">99.3<span class="u">%</span></span><span class="fl">SQL 执行成功率</span></div>
+        <div class="fig"><span class="fn">82.56<span class="u">%</span></span><span class="fl">查询结果正确率</span></div>
+      </div>
+
+      <p>82.56% 不是一个漂亮的数字，但它有用——它让我把"取数不准"<strong>定位到了具体场景和模块</strong>，而不是笼统地说产品好不好。</p>
+
+      <div class="breakdown">
+        <div class="bt">结果正确率 · 分场景</div>
+        <div class="bs">同样是"取数"，不同运营场景的难度差得很远。</div>
+        <div class="bd-row"><div class="bl">渠道投放</div><div class="bd-track"><div class="bd-fill" style="width:94.29%"></div></div><div class="bv">94.3%</div></div>
+        <div class="bd-row"><div class="bl">内容运营</div><div class="bd-track"><div class="bd-fill" style="width:85.52%"></div></div><div class="bv">85.5%</div></div>
+        <div class="bd-row"><div class="bl">用户增长</div><div class="bd-track"><div class="bd-fill low" style="width:68.28%"></div></div><div class="bv">68.3%</div></div>
+      </div>
+
+      <p>再往下拆一层：简单查询正确率 86.6%，<strong>复杂查询只有 33.3%</strong>——问题集中爆发在<strong>多表关联与聚合逻辑</strong>上。这就是这套评测最值钱的产出：它没有给我一个高分，给我的是一个"该先修哪里"的答案。</p>
+      <p class="note">数据取自项目内 evaluation/results/benchmark_live_all_curated（N=430）。</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rnum">06</span><span class="rlab">下一步</span></div>
+    <div class="body">
+      <ul class="clean">
+        <li><strong>修多表关联与聚合：</strong>复杂查询只有 33%，这是最该先动的地方。</li>
+        <li><strong>把"澄清"纳入评测：</strong>补一组"模糊意图"用例，让端到端链路真正被测到。</li>
+        <li><strong>建口径层（指标字典）：</strong>现在 Schema 精确率只有 19.44%——召回太宽。缺的正是一个统一的指标口径层，让"新增用户"这类词在不同角色下指向同一个定义。</li>
+      </ul>
+    </div>
+  </section>
+
+  <a class="next" href="glimmer.html">
+    <span><span class="nlab">看另一个案例</span> &nbsp;<span class="nt">Glimmer · 风险分级 Agent</span></span>
+    <span class="arw">→</span>
+  </a>
+
+</div>
+</body>
+</html>

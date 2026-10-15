@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吕民春 · AI 产品作品集</title>
+<style>
+  :root{
+    --paper:#F5F3EC;
+    --paper-2:#ECE8DC;
+    --ink:#1B1A16;
+    --muted:#6A6659;
+    --faint:#948F80;
+    --rule:#D8D2C2;
+    --rule-2:#BFB8A3;
+    --brass:#8A6C1C;
+    --signal:#A63A2E;
+    --maxw:840px;
+    --serif:"Noto Serif CJK SC","Source Han Serif SC","Songti SC","SimSun",Georgia,serif;
+    --sans:"Noto Sans CJK SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:"DejaVu Sans Mono","JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:16.5px;line-height:1.75;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  .doc{max-width:var(--maxw);margin:0 auto;padding:0 30px;}
+  .mono{font-family:var(--mono);}
+  a{color:inherit;}
+
+  /* masthead */
+  .mast{padding:40px 0 0;display:flex;align-items:baseline;justify-content:space-between;gap:20px;}
+  .mast .name{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.04em;}
+  .mast .links{font-size:13px;color:var(--muted);}
+  .mast .links a{color:var(--muted);text-decoration:none;margin-left:20px;border-bottom:1px solid transparent;}
+  .mast .links a:hover{color:var(--brass);border-color:var(--brass);}
+  .rule{height:0;border:0;border-top:1px solid var(--rule);margin:14px 0 0;}
+  .rule.dbl{border-top:2px solid var(--ink);margin-top:16px;}
+
+  /* title block */
+  .titleblock{padding:44px 0 40px;}
+  .kicker{font-size:13px;color:var(--brass);font-family:var(--mono);letter-spacing:.02em;margin:0 0 14px;}
+  h1{font-family:var(--serif);font-weight:600;font-size:60px;line-height:1.06;letter-spacing:-.005em;margin:0 0 18px;}
+  .lede{font-size:20px;color:var(--muted);line-height:1.55;margin:0;max-width:30em;}
+
+  /* labeled section */
+  .sec{display:grid;grid-template-columns:132px 1fr;gap:32px;padding:34px 0;border-top:1px solid var(--rule);}
+  .rail{font-size:13px;line-height:1.5;}
+  .rail .rnum{display:block;font-family:var(--mono);font-size:12px;color:var(--brass);margin-bottom:6px;}
+  .rail .rlab{color:var(--ink);font-weight:600;letter-spacing:.02em;}
+  .body p{margin:0 0 14px;color:var(--ink);}
+  .body p:last-child{margin-bottom:0;}
+  .body p.muted{color:var(--muted);}
+  strong{font-weight:600;}
+  em.a{font-style:normal;box-shadow:inset 0 -0.55em 0 rgba(138,108,28,.18);}
+
+  /* records */
+  .records{margin-top:-4px;}
+  .record{
+    display:grid;grid-template-columns:34px 1fr auto;gap:22px;align-items:start;
+    padding:22px 0;border-top:1px solid var(--rule);text-decoration:none;color:inherit;
+    transition:background .15s ease;
+  }
+  .record:last-child{border-bottom:1px solid var(--rule);}
+  .record:hover{background:var(--paper-2);}
+  .record .idx{font-family:var(--mono);font-size:13px;color:var(--brass);padding-top:3px;}
+  .record .main>*{display:block;}
+  .record .main .tag{font-size:12.5px;font-family:var(--mono);color:var(--muted);letter-spacing:.02em;}
+  .record .main .title{font-family:var(--serif);font-size:23px;font-weight:600;margin:3px 0 6px;letter-spacing:-.005em;}
+  .record .main .desc{font-size:14.5px;color:var(--muted);line-height:1.6;}
+  .record .go{color:var(--faint);font-size:20px;padding-top:4px;transition:transform .18s ease,color .18s ease;}
+  .record:hover .go{transform:translateX(4px);color:var(--brass);}
+
+  /* footer */
+  .foot{margin-top:40px;border-top:1px solid var(--rule);padding:22px 0 60px;
+    display:grid;grid-template-columns:repeat(3,auto);gap:10px 40px;justify-content:start;font-size:14px;color:var(--muted);}
+  .foot .k{color:var(--faint);font-family:var(--mono);font-size:12.5px;margin-right:10px;}
+  .foot a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule);}
+  .foot a:hover{color:var(--brass);border-color:var(--brass);}
+
+  @media (max-width:640px){
+    h1{font-size:40px;}
+    .sec{grid-template-columns:1fr;gap:12px;}
+    .rail{display:flex;gap:10px;align-items:baseline;}
+    .rail .rnum{margin:0;}
+    .foot{grid-template-columns:1fr;}
+  }
+  @media print{
+    :root{--paper:#fff;--paper-2:#fff;}
+    body{font-size:12pt;}
+    .mast{padding-top:0;}
+    h1{font-size:40px;}
+    .titleblock{padding:24px 0 22px;}
+    .sec{padding:20px 0;break-inside:avoid;}
+    .record{break-inside:avoid;}
+    .record:hover{background:none;}
+    .foot{padding-bottom:0;}
+    .titleblock,.rail{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="mast">
+    <span class="name">吕民春</span>
+    <span class="links">
+      <a href="mailto:m18193310560@163.com">邮箱</a>
+      <a href="https://github.com/SpringLibra">GitHub</a>
+      <a href="resume.pdf">简历 PDF</a>
+    </span>
+  </div>
+  <hr class="rule dbl">
+
+  <section class="titleblock">
+    <p class="kicker">AI 产品作品集</p>
+    <h1>从想法到实践</h1>
+    <p class="lede">自己把产品做出来，也自己验证它到底对不对。</p>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rlab">关于我</span></div>
+    <div class="body">
+      <p>本科人力资源管理，硕士管理科学与工程。在美团做过运营、在联想做过 AI 产品助理，并独立完成两个从 0 到 1 的 AI 产品。</p>
+      <p class="muted">我习惯自己动手把产品做出来——<strong>因为每一个判断，我都想让它经得起验证。</strong></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="rail"><span class="rlab">两个案例</span></div>
+    <div class="records">
+
+      <a class="record" href="glimmer.html">
+        <span class="idx">01</span>
+        <span class="main">
+          <span class="tag">AI + 心理</span>
+          <span class="title">Glimmer 智能体</span>
+          <span class="desc">面向校园的心理陪伴 Agent：用 AI 接住学生的求助，再用人工兜底把高风险接稳。</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+
+      <a class="record" href="datatalk.html">
+        <span class="idx">02</span>
+        <span class="main">
+          <span class="tag">AI + Chat BI</span>
+          <span class="title">DataTalk</span>
+          <span class="desc">让不懂 SQL 的运营用一句话取数，重点解决「问出来的数，能不能信」。</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="foot">
+    <span><span class="k">邮箱</span><a href="mailto:m18193310560@163.com">m18193310560@163.com</a></span>
+    <span><span class="k">GitHub</span><a href="https://github.com/SpringLibra">github.com/SpringLibra</a></span>
+    <span><span class="k">简历</span><a href="resume.pdf">PDF 下载</a></span>
+  </div>
+
+</div>
+</body>
+</html>
